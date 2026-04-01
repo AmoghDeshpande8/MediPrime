@@ -1,160 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Hospital Management System</title>
+<title>MediPrime Hospital</title>
+
+<!-- Bootstrap LOCAL CSS -->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
 <style>
 body {
-    font-family: Arial;
-    margin: 0;
     background: #f5f5f5;
 }
 
-/* Header */
-.header {
-    background: #cbb38a;
-    padding: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.navbar {
+    background: #cbb38a !important;
 }
 
-.nav a {
-    margin-left: 20px;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-}
-
-/* Dropdown */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 150px;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 10px;
-    display: block;
-    text-decoration: none;
-}
-
-.dropdown-content a:hover {
-    background: #eee;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-/* Banner */
 .banner {
-    text-align: center;
-    padding: 40px;
     background: #d8c29d;
+    padding: 40px;
+    text-align: center;
     font-size: 24px;
     font-weight: bold;
 }
 
-/* Cards */
-.container {
-    display: flex;
-    justify-content: space-around;
-    margin: 40px;
-}
-
-.card {
-    background: #d8c29d;
-    padding: 20px;
-    text-align: center;
-    width: 200px;
-    border-radius: 10px;
-}
-
 .card img {
-        width: 200px;
-    height: 150px;
+    height: 180px;
+    object-fit: cover;
 }
+
 .about-box {
     width: 300px;
-    padding: 15px;
-    line-height: 1.5;
 }
 </style>
+
 </head>
 
 <body>
 
-<!-- Header -->
-<div class="header">
-    <h2>MediPrime</h2>
-    
-    <div class="nav">
-      <div class="dropdown">
-    <a href="#">About Us</a>
-    <div class="dropdown-content about-box">
-        <p>
-            MediPrime Hospital is committed to providing high-quality healthcare 
-            services with advanced technology and experienced medical professionals. 
-            Our mission is to ensure patient satisfaction, safety, and well-being 
-            through compassionate care and innovative treatments. We offer services 
-            including diagnostics, emergency care, pharmacy, and specialized treatments.
-        </p>
-    </div>
-</div>
-      
- 
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">MediPrime</a>
 
-        <div class="dropdown">
-            <a href="#">Login ▼</a>
-            <div class="dropdown-content">
-                <a href="#">Admin Login</a>
-                <a href="#">Patient Login</a>
-                <a href="#">Doctor Login</a>
-                <a href="#">Medical Login</a>
-            </div>
-        </div>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        ☰
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+      <ul class="navbar-nav">
+
+        <!-- About -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">
+            About Us
+          </a>
+          <div class="dropdown-menu p-3 about-box">
+            MediPrime Hospital provides high-quality healthcare services.
+          </div>
+        </li>
+
+        <!-- Login -->
+        <li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle fw-bold" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown">
+    Login
+  </a>
+
+  <div class="dropdown-menu dropdown-menu-end p-3 shadow" style="min-width: 250px;">
+
+    <h6 class="dropdown-header text-center mb-2">Login As</h6>
+
+    <a href="#" class="dropdown-item d-flex align-items-center gap-2">
+      👨‍💼 <span>Admin</span>
+    </a>
+
+    <a href="#" class="dropdown-item d-flex align-items-center gap-2">
+      🧑‍⚕️ <span>Doctor</span>
+    </a>
+
+    <a href="#" class="dropdown-item d-flex align-items-center gap-2">
+      🧑‍🦽 <span>Patient</span>
+    </a>
+
+    <a href="#" class="dropdown-item d-flex align-items-center gap-2">
+      💊 <span>Medical Staff</span>
+    </a>
+
+    <hr>
+
+    <!-- Optional Quick Login Button -->
+    <div class="text-center">
+      <a href="#" class="btn btn-sm btn-primary w-100">Quick Login</a>
     </div>
-</div>
+
+  </div>
+</li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
 
 <!-- Banner -->
 <div class="banner">
     "God can not be everywhere so he sends Doctor"
 </div>
 
-<h2 style="text-align:center;">Start thinking wellness not illness</h2>
+<h2 class="text-center mt-4">Start thinking wellness not illness</h2>
 
 <!-- Cards -->
-<div class="container">
-    
-    <div class="card">
-        <img src="https://img.freepik.com/premium-photo/closeup-photo-doctor-standing-hospital-world-doctors-day-with-generative-ai_455711-2177.jpg?w=2000">
-        <h3>Our Doctors</h3>
-        <p>The job of doctor is to diagnose and treat the illness and injury.</p>
+<div class="container mt-5">
+  <div class="row text-center g-4">
+
+    <div class="col-md-4">
+      <div class="card shadow">
+        <img src="https://img.freepik.com/premium-photo/closeup-photo-doctor-standing-hospital-world-doctors-day-with-generative-ai_455711-2177.jpg?w=2000" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">Our Doctors</h5>
+          <p class="card-text">Doctors diagnose and treat illness.</p>
+        </div>
+      </div>
     </div>
 
-    <div class="card">
-        <img src="https://img.freepik.com/premium-photo/group-confident-indian-healthcare-professionals-nurses-teal-scrubs-smiling-bright-hospital-corridor_822916-3974.jpg">
-        <h3>Our Nurses</h3>
-        <p>A nurse is a person who is trained to give care to people who are sick or injured</p>
+    <div class="col-md-4">
+      <div class="card shadow">
+        <img src="https://img.freepik.com/premium-photo/group-confident-indian-healthcare-professionals-nurses-teal-scrubs-smiling-bright-hospital-corridor_822916-3974.jpg" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">Our Nurses</h5>
+          <p class="card-text">Nurses care for patients.</p>
+        </div>
+      </div>
     </div>
 
-    <div class="card">
-        <img src="https://as2.ftcdn.net/v2/jpg/07/20/35/27/1000_F_720352714_fe8ZThSvRyxfoUcOSpEgKpa2YO5ti7Zv.jpg">
-        <h3>Pharmacist</h3>
-        <p>Pharmacist will handle medicines.</p>
+    <div class="col-md-4">
+      <div class="card shadow">
+        <img src="https://as2.ftcdn.net/v2/jpg/07/20/35/27/1000_F_720352714_fe8ZThSvRyxfoUcOSpEgKpa2YO5ti7Zv.jpg" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">Pharmacist</h5>
+          <p class="card-text">Handles medicines.</p>
+        </div>
+      </div>
     </div>
 
-
+  </div>
 </div>
+
+<!-- Bootstrap LOCAL JS -->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 
 </body>
 </html>
