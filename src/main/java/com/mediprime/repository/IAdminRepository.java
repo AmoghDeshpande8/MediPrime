@@ -9,10 +9,10 @@ import com.mediprime.entity.Admin;
 public interface IAdminRepository extends JpaRepository<Admin,Integer> {
 
     // Login check
-    Admin findByUsernameAndPassword(String username, String password);
+    //Admin findByUsernameAndPassword(String username, String password);
 
     // Check if username exists
-    Admin findByUsername(String username);
+    Admin findByEmail(String email);
     
-    boolean existsByUsername(String username);
+    
 }
