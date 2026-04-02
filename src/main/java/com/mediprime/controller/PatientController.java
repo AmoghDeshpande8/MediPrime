@@ -44,65 +44,59 @@ public class PatientController {
 			}
 		}
 	}
-	
-	  // ✅ Show Register Page
-    @GetMapping("/patientRegister")
-    public String showRegister() {
-        return "Patient_register_page";
-    }
-    
-    @PostMapping("/patientRegister")
-    public String register(
-            @RequestParam String password,
-            @RequestParam String name,
-            @RequestParam String email,
-            @RequestParam String contact,
-           @RequestParam int age,
-            Model model) {
 
+	// ✅ Show Register Page
+	@GetMapping("/patientRegister")
+	public String showRegister() {
+		return "Patient_register_page";
+	}
 
-if (!contact.matches("\\d{10}")) {
-model.addAttribute("error", "Contact must be exactly 10 digits");
+	@PostMapping("/patientRegister")
+	public String register(@RequestParam String password, 
+			@RequestParam String name,
+			@RequestParam String email,
+			@RequestParam String contact, @RequestParam int age, Model model) {
 
+		if (!contact.matches("\\d{10}")) {
+			model.addAttribute("error", "Contact must be exactly 10 digits");
 
 // 🔥 Keep user entered data
 
-model.addAttribute("name", name);
-model.addAttribute("email", email);
-model.addAttribute("contact", contact);
-model.addAttribute("age", age);
+			model.addAttribute("name", name);
+			model.addAttribute("email", email);
+			model.addAttribute("contact", contact);
+			model.addAttribute("age", age);
 
-return "Patient_register_page";
-}
+			return "Patient_register_page";
+		}
 
 // ✅ Username already exists check (BETTER than exception)
-if (service.findByEmail(email) != null) {
+		if (service.findByEmail(email) != null) {
 
-model.addAttribute("error", "Email already exists");
+			model.addAttribute("error", "Email already exists");
 
+			model.addAttribute("name", name);
+			//model.addAttribute("email", email);
+			model.addAttribute("contact", contact);
+			model.addAttribute("password", password);
+			model.addAttribute("age", age);
 
-model.addAttribute("name", name);
-//model.addAttribute("email", email);
-model.addAttribute("contact", contact);
-model.addAttribute("password", password);
-model.addAttribute("age", age);
-
-return "Patient_register_page";
-}
+			return "Patient_register_page";
+		}
 
 // ✅ Save data
-Patient patient = new Patient();
+		Patient patient = new Patient();
 
-patient.setPassword(password);
-patient.setName(name);
-patient.setEmail(email);
-patient.setContact(contact);
-patient.setAge(age);
+		patient.setPassword(password);
+		patient.setName(name);
+		patient.setEmail(email);
+		patient.setContact(contact);
+		patient.setAge(age);
 
-service.register(patient);
+		service.register(patient);
 
-model.addAttribute("success", "Registration successful, please login");
-return "Patient_login_page";
-}
+		model.addAttribute("success", "Registration successful, please login");
+		return "Patient_login_page";
+	}
 
 }
