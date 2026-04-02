@@ -1,9 +1,9 @@
-
 package com.mediprime.entity;
 
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,8 +21,10 @@ public class Patient {
     private String name;
     private int age;
     private String disease;
+    @Column(unique = true)
     private String email;
     private String password;
+    private String contact;
 
 	public String getEmail() {
 		return email;
@@ -103,6 +105,16 @@ public class Patient {
 	public void setAppointments(List<Appointment> appointments) {
 		this.appointments = appointments;
 	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+	
+	
     
     
 }
