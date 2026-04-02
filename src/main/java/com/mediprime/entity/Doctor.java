@@ -29,8 +29,6 @@ public class Doctor {
     
     private String password;
 
-  
-    
 	private String contact;
 	
 	private int experience;
