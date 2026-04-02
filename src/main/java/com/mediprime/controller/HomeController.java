@@ -3,10 +3,15 @@ package com.mediprime.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mediprime.entity.Admin;
 import com.mediprime.service.IAdminService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class HomeController {
@@ -60,31 +65,26 @@ public class HomeController {
 
     // ✅ Register Logic
     @PostMapping("/register")
-    public String register(@RequestParam String username,
-                           @RequestParam String password,@RequestParam String contact,
-                           @RequestParam String email,@RequestParam String role,@RequestParam String name,
+    public String register(@ModelAttribute("admin") Admin admin,
+                           org.springframework.validation.BindingResult result,
                            Model model) {
 
-        try {
-            Admin admin = new Admin();
-            admin.setUsername(username);
-            admin.setPassword(password);
-            admin.setName(name);
-            admin.setContact(contact);
-            admin.setEmail(email);
-            admin.setRole(role);
+        // 🔴 Validation errors (like contact not 10 digits)
+        if (result.hasErrors()) {
+            return "register_page";
+        }
 
-            service.register(admin);
-
-            model.addAttribute("success", "Registration successful, please login");
-            return "login_page";
-
-        } catch (Exception e) {
+        // 🔴 Check username exists
+        if (service.findByUsername(admin.getUsername()) != null) {
             model.addAttribute("error", "Username already exists");
             return "register_page";
         }
-    }
 
+        service.register(admin);
+
+        model.addAttribute("success", "Registration successful, please login");
+        return "login_page";
+    }
     // ✅ Dashboard Page
     @GetMapping("/dashboard")
     public String dashboard() {

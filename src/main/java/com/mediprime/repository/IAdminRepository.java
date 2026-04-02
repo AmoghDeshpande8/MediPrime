@@ -13,4 +13,6 @@ public interface IAdminRepository extends JpaRepository<Admin,Integer> {
 
     // Check if username exists
     Admin findByUsername(String username);
+    
+    boolean existsByUsername(String username);
 }
