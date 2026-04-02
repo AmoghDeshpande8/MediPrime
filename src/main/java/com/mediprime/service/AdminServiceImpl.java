@@ -15,7 +15,7 @@ public class AdminServiceImpl implements IAdminService {
     @Override
     public Admin login(String email, String password) {
 
-        Admin admin = repo.findByEmail(email);
+        Admin admin = repo.findByUsername(email);
 
         if (admin != null && admin.getPassword().equals(password)) {
             return admin; // login success
@@ -26,7 +26,7 @@ public class AdminServiceImpl implements IAdminService {
 
     @Override
     public Admin findByUsername(String email) {
-        return repo.findByEmail(email);
+        return repo.findByUsername(email);
     }
 
     @Override

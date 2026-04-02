@@ -12,7 +12,7 @@ public interface IAdminRepository extends JpaRepository<Admin,Integer> {
     //Admin findByUsernameAndPassword(String username, String password);
 
     // Check if username exists
-    Admin findByEmail(String email);
+    Admin findByUsername(String username);
     
     
 }
