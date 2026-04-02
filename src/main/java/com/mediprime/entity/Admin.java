@@ -1,6 +1,11 @@
 package com.mediprime.entity;
 
-import jakarta.persistence.*;
+
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 @Entity
@@ -18,6 +23,7 @@ public class Admin {
     private String role; // ADMIN or RECEPTIONIST
 
     private String name;
+
 
     private String contact;
 

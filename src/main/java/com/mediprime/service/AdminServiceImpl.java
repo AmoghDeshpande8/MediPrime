@@ -31,6 +31,13 @@ public class AdminServiceImpl implements IAdminService {
 
     @Override
     public void register(Admin admin) {
+
+        Admin existing = repo.findByUsername(admin.getUsername());
+
+        if (existing != null) {
+            throw new RuntimeException("Username already exists");
+        }
+
         repo.save(admin);
     }
 }

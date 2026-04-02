@@ -21,6 +21,8 @@ public class Patient {
     private String name;
     private int age;
     private String disease;
+    private String username;
+    private String contact;
     private String email;
     private String password;
 
@@ -93,8 +95,26 @@ public class Patient {
 	public void setDisease(String disease) {
 		this.disease = disease;
 	}
+	
 
 
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
 
 	public List<Appointment> getAppointments() {
 		return appointments;
