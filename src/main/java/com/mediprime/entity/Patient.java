@@ -20,7 +20,6 @@ public class Patient {
     private int id;
     private String name;
     private int age;
-    private String disease;
     @Column(unique = true)
     private String email;
     private String password;
@@ -83,19 +82,6 @@ public class Patient {
 	public void setAge(int age) {
 		this.age = age;
 	}
-
-
-
-	public String getDisease() {
-		return disease;
-	}
-
-
-
-	public void setDisease(String disease) {
-		this.disease = disease;
-	}
-
 
 
 	public List<Appointment> getAppointments() {
