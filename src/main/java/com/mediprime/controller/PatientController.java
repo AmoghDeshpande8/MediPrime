@@ -52,7 +52,7 @@ public class PatientController {
     }
     
     @PostMapping("/patientRegister")
-    public String register(@RequestParam String username,
+    public String register(
             @RequestParam String password,
             @RequestParam String name,
             @RequestParam String email,
@@ -66,7 +66,7 @@ model.addAttribute("error", "Contact must be exactly 10 digits");
 
 
 // 🔥 Keep user entered data
-model.addAttribute("username", username);
+
 model.addAttribute("name", name);
 model.addAttribute("email", email);
 model.addAttribute("contact", contact);
@@ -80,7 +80,7 @@ if (service.findByEmail(email) != null) {
 
 model.addAttribute("error", "Email already exists");
 
-model.addAttribute("username", username);
+
 model.addAttribute("name", name);
 //model.addAttribute("email", email);
 model.addAttribute("contact", contact);
@@ -92,7 +92,7 @@ return "Patient_register_page";
 
 // ✅ Save data
 Patient patient = new Patient();
-patient.setUsername(username);
+
 patient.setPassword(password);
 patient.setName(name);
 patient.setEmail(email);

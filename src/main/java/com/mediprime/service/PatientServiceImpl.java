@@ -32,7 +32,7 @@ public class PatientServiceImpl implements IPatientService {
 		 Patient existing = repo.findByEmail(patient.getEmail());
 
 	        if (existing != null) {
-	            throw new RuntimeException("Username already exists");
+	            throw new RuntimeException("Email already exists");
 	        }
 
 	        repo.save(patient);
