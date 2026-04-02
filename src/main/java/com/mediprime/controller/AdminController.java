@@ -26,7 +26,7 @@ public class AdminController {
     // ✅ Show Login Page
     @GetMapping("/admin")
     public String showLogin() {
-        return "login_page";
+        return "Admin_login_page";
     }
 
     // ✅ Login Logic
@@ -47,10 +47,10 @@ public class AdminController {
             if (existing == null) {
                 model.addAttribute("username", username);
                 model.addAttribute("msg", "User not found, please register");
-                return "register_page";
+                return "Admin_register_page";
             } else {
                 model.addAttribute("error", "Invalid password");
-                return "login_page";
+                return "Admin_login_page";
             }
         }
     }
@@ -58,79 +58,33 @@ public class AdminController {
     // ✅ Show Register Page
     @GetMapping("/register")
     public String showRegister() {
-        return "register_page";
+
+        return "Admin_register_page";
     }
 
+    // ✅ Register Logic
     @PostMapping("/register")
-//    public String register(@RequestParam String username,
-//                           @RequestParam String password,
-//                           @RequestParam String name,
-//                           @RequestParam String email,
-//                           @RequestParam String contact,
-//                           @RequestParam String role,
-//                           Model model) {
-//
-//      
-//        if (!contact.matches("\\d{10}")) {
-//            model.addAttribute("error", "Contact must be exactly 10 digits");
-//
-//           
-//            model.addAttribute("username", username);
-//            model.addAttribute("name", name);
-//            model.addAttribute("email", email);
-//            model.addAttribute("contact", contact);
-//            model.addAttribute("role", role);
-//
-//            return "register_page";
-//        }
-//
-//        // ✅ Username already exists check (BETTER than exception)
-//        if (service.findByUsername(username) != null) {
-//
-//            model.addAttribute("error", "Username already exists");
-//
-//            model.addAttribute("username", username);
-//            model.addAttribute("name", name);
-//            model.addAttribute("email", email);
-//            model.addAttribute("contact", contact);
-//            model.addAttribute("role", role);
-//
-//            return "register_page";
-//        }
-//
-//        // ✅ Save data
-//        Admin admin = new Admin();
-//        
-//        admin.setUsername(username);
-//        admin.setPassword(password);
-//        admin.setName(name);
-//        admin.setEmail(email);
-//        admin.setContact(contact);
-//        admin.setRole(role);
-
-
     public String register(@ModelAttribute("admin") Admin admin,
                            org.springframework.validation.BindingResult result,
                            Model model) {
 
         // 🔴 Validation errors (like contact not 10 digits)
         if (result.hasErrors()) {
-            return "register_page";
+            return "Admin_register_page";
         }
 
         // 🔴 Check username exists
         if (service.findByUsername(admin.getUsername()) != null) {
             model.addAttribute("error", "Username already exists");
-            return "register_page";
-        }
 
+            return "Admin_register_page";
+        }
 
         service.register(admin);
 
         model.addAttribute("success", "Registration successful, please login");
-        return "login_page";
+        return "Admin_login_page";
     }
-
     // ✅ Dashboard Page
     @GetMapping("/dashboard")
     public String dashboard() {
