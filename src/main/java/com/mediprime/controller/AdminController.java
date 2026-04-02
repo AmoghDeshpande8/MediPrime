@@ -28,7 +28,7 @@ public class AdminController {
     // ✅ Show Login Page
     @GetMapping("/admin")
     public String showLogin() {
-        return "login_page";
+        return "Admin_login_page";
     }
 
     // ✅ Login Logic
@@ -49,10 +49,10 @@ public class AdminController {
             if (existing == null) {
                 model.addAttribute("username", username);
                 model.addAttribute("msg", "User not found, please register");
-                return "register_page";
+                return "Admin_register_page";
             } else {
                 model.addAttribute("error", "Invalid password");
-                return "login_page";
+                return "Admin_login_page";
             }
         }
     }
@@ -60,7 +60,7 @@ public class AdminController {
     // ✅ Show Register Page
     @GetMapping("/register")
     public String showRegister() {
-        return "register_page";
+        return "Admin_register_page";
     }
 
     // ✅ Register Logic
@@ -71,19 +71,19 @@ public class AdminController {
 
         // 🔴 Validation errors (like contact not 10 digits)
         if (result.hasErrors()) {
-            return "register_page";
+            return "Admin_register_page";
         }
 
         // 🔴 Check username exists
         if (service.findByUsername(admin.getUsername()) != null) {
             model.addAttribute("error", "Username already exists");
-            return "register_page";
+            return "Admin_register_page";
         }
 
         service.register(admin);
 
         model.addAttribute("success", "Registration successful, please login");
-        return "login_page";
+        return "Admin_login_page";
     }
     // ✅ Dashboard Page
     @GetMapping("/dashboard")

@@ -56,7 +56,7 @@ public class DoctorController {
 
 	    // ✅ Register Logic
 	    @PostMapping("/register")
-	    public String register(@ModelAttribute("admin") Doctor doctor,
+	    public String register(@ModelAttribute("doctor") Doctor doctor,
 	                           org.springframework.validation.BindingResult result,
 	                           Model model) {
 
