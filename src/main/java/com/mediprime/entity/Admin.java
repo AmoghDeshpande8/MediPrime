@@ -24,6 +24,7 @@ public class Admin {
 
     private String name;
 
+
     private String contact;
 
     @Column(unique = true)

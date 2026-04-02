@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.mediprime.entity.Admin;
 import com.mediprime.service.IAdminService;
 
-import jakarta.validation.Valid;
-
 @Controller
 public class AdminController {
 
@@ -60,6 +58,7 @@ public class AdminController {
     // ✅ Show Register Page
     @GetMapping("/register")
     public String showRegister() {
+
         return "Admin_register_page";
     }
 
@@ -77,6 +76,7 @@ public class AdminController {
         // 🔴 Check username exists
         if (service.findByUsername(admin.getUsername()) != null) {
             model.addAttribute("error", "Username already exists");
+
             return "Admin_register_page";
         }
 
