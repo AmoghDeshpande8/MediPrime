@@ -44,13 +44,13 @@
 
 <div class="register-box">
 
-    <h2>Register Admin</h2>
+    <h2>Register Doctor</h2>
 
     <!-- Messages -->
     <p class="text-danger text-center" th:text="${error}"></p>
     <p class="text-primary text-center" th:text="${msg}"></p>
 
-    <form th:action="@{/register}" method="post">
+    <form th:action="@{/doctor-api/register}" method="post">
 
         <div class="mb-3">
             <label>Full Name</label>
@@ -58,38 +58,36 @@
         </div>
 
         <div class="mb-3">
-            <label>Username</label>
-            <input type="text" name="username" th:value="${username}" class="form-control" required>
+            <label>Specialization</label>
+            <input type="text" name="Specialization"  class="form-control" required>
         </div>
 
+		<div class="mb-3">
+            <label>Email</label>
+            <input type="email" name="email" th:value="${email}" class="form-control" required>
+        </div>
+        
         <div class="mb-3">
             <label>Password</label>
             <input type="password" name="password" class="form-control" required>
         </div>
 
-        <div class="mb-3">
-            <label>Email</label>
-            <input type="email" name="email" class="form-control" required>
-        </div>
 
         <div class="mb-3">
             <label>Contact</label>
-
-     <input type="tel" name="contact" class="form-control"
-       pattern="[0-9]{10}" maxlength="10" title="Enter valid 10-digit mobile number"
-       placeholder="Enter 10 digit number" required>
-
-            
+            <input type="tel" name="contact" class="form-control" pattern="[0-9]{10}" maxlength=10 placeholder="Enter 10 digit" required>
         </div>
-      
-
-        <!-- Role Dropdown -->
+        
         <div class="mb-3">
-            <label>Role</label>
-            <select name="role" class="form-control" required>
-                <option value="ADMIN">Admin</option>
-            </select>
+            <label>Experience</label>
+            <input type="number" name="experience" class="form-control" required>
         </div>
+        
+        <div class="mb-3">
+            <label>Qualification</label>
+            <input type="text" name="qualification"  class="form-control" required>
+        </div>
+        
 
         <button type="submit" class="btn btn-custom">Register</button>
     </form>
@@ -97,7 +95,7 @@
     <br>
 
     <p class="text-center">
-        Already have account? <a th:href="@{/admin}">Login Here</a>
+        Already have account? <a th:href="@{/doctor-api/doctor_login}">Login Here</a>
     </p>
 
 </div>

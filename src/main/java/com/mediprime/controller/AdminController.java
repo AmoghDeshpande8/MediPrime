@@ -3,7 +3,10 @@ package com.mediprime.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mediprime.entity.Admin;
 import com.mediprime.service.IAdminService;
@@ -59,57 +62,75 @@ public class AdminController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestParam String username,
-                           @RequestParam String password,
-                           @RequestParam String name,
-                           @RequestParam String email,
-                           @RequestParam String contact,
-                           @RequestParam String role,
+//    public String register(@RequestParam String username,
+//                           @RequestParam String password,
+//                           @RequestParam String name,
+//                           @RequestParam String email,
+//                           @RequestParam String contact,
+//                           @RequestParam String role,
+//                           Model model) {
+//
+//      
+//        if (!contact.matches("\\d{10}")) {
+//            model.addAttribute("error", "Contact must be exactly 10 digits");
+//
+//           
+//            model.addAttribute("username", username);
+//            model.addAttribute("name", name);
+//            model.addAttribute("email", email);
+//            model.addAttribute("contact", contact);
+//            model.addAttribute("role", role);
+//
+//            return "register_page";
+//        }
+//
+//        // ✅ Username already exists check (BETTER than exception)
+//        if (service.findByUsername(username) != null) {
+//
+//            model.addAttribute("error", "Username already exists");
+//
+//            model.addAttribute("username", username);
+//            model.addAttribute("name", name);
+//            model.addAttribute("email", email);
+//            model.addAttribute("contact", contact);
+//            model.addAttribute("role", role);
+//
+//            return "register_page";
+//        }
+//
+//        // ✅ Save data
+//        Admin admin = new Admin();
+//        
+//        admin.setUsername(username);
+//        admin.setPassword(password);
+//        admin.setName(name);
+//        admin.setEmail(email);
+//        admin.setContact(contact);
+//        admin.setRole(role);
+
+
+    public String register(@ModelAttribute("admin") Admin admin,
+                           org.springframework.validation.BindingResult result,
                            Model model) {
 
-      
-        if (!contact.matches("\\d{10}")) {
-            model.addAttribute("error", "Contact must be exactly 10 digits");
-
-           
-            model.addAttribute("username", username);
-            model.addAttribute("name", name);
-            model.addAttribute("email", email);
-            model.addAttribute("contact", contact);
-            model.addAttribute("role", role);
-
+        // 🔴 Validation errors (like contact not 10 digits)
+        if (result.hasErrors()) {
             return "register_page";
         }
 
-        // ✅ Username already exists check (BETTER than exception)
-        if (service.findByUsername(username) != null) {
-
+        // 🔴 Check username exists
+        if (service.findByUsername(admin.getUsername()) != null) {
             model.addAttribute("error", "Username already exists");
-
-            model.addAttribute("username", username);
-            model.addAttribute("name", name);
-            model.addAttribute("email", email);
-            model.addAttribute("contact", contact);
-            model.addAttribute("role", role);
-
             return "register_page";
         }
 
-        // ✅ Save data
-        Admin admin = new Admin();
-        admin.setUsername(username);
-        admin.setPassword(password);
-        admin.setName(name);
-        admin.setEmail(email);
-        admin.setContact(contact);
-        admin.setRole(role);
 
         service.register(admin);
 
         model.addAttribute("success", "Registration successful, please login");
         return "login_page";
     }
-    
+
     // ✅ Dashboard Page
     @GetMapping("/dashboard")
     public String dashboard() {
