@@ -84,6 +84,10 @@ public class Patient {
 	}
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> amogh
 	public List<Appointment> getAppointments() {
 		return appointments;
 	}
