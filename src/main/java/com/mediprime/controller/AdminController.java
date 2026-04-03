@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.mediprime.entity.Admin;
 import com.mediprime.service.IAdminService;
 
+
 @Controller
 public class AdminController {
 
@@ -26,7 +27,7 @@ public class AdminController {
     // ✅ Show Login Page
     @GetMapping("/admin")
     public String showLogin() {
-        return "login_page";
+        return "Admin_login_page";
     }
 
     // ✅ Login Logic
@@ -47,10 +48,10 @@ public class AdminController {
             if (existing == null) {
                 model.addAttribute("username", username);
                 model.addAttribute("msg", "User not found, please register");
-                return "register_page";
+                return "Admin_register_page";
             } else {
                 model.addAttribute("error", "Invalid password");
-                return "login_page";
+                return "Admin_login_page";
             }
         }
     }
@@ -58,10 +59,11 @@ public class AdminController {
     // ✅ Show Register Page
     @GetMapping("/register")
     public String showRegister() {
-        return "register_page";
+        return "Admin_register_page";
     }
 
-    @PostMapping("/register")
+
+//    @PostMapping("/register")
 //    public String register(@RequestParam String username,
 //                           @RequestParam String password,
 //                           @RequestParam String name,
@@ -109,26 +111,28 @@ public class AdminController {
 //        admin.setRole(role);
 
 
+
+    // ✅ Register Logic
+    @PostMapping("/register")
     public String register(@ModelAttribute("admin") Admin admin,
                            org.springframework.validation.BindingResult result,
                            Model model) {
 
         // 🔴 Validation errors (like contact not 10 digits)
         if (result.hasErrors()) {
-            return "register_page";
+            return "Admin_register_page";
         }
 
         // 🔴 Check username exists
         if (service.findByUsername(admin.getUsername()) != null) {
             model.addAttribute("error", "Username already exists");
-            return "register_page";
+            return "Admin_register_page";
         }
-
 
         service.register(admin);
 
         model.addAttribute("success", "Registration successful, please login");
-        return "login_page";
+        return "Admin_login_page";
     }
 
     // ✅ Dashboard Page

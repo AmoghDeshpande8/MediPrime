@@ -9,6 +9,7 @@ import com.mediprime.entity.Admin;
 public interface IAdminRepository extends JpaRepository<Admin,Integer> {
 
 
+
     // Check if username exists
     Admin findByUsername(String username);
     

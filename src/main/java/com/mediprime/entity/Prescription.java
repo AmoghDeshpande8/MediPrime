@@ -44,7 +44,7 @@ public class Prescription {
         joinColumns = @JoinColumn(name = "prescription_id"),
         inverseJoinColumns = @JoinColumn(name = "medicine_id")
     )
-    private List<Medical> medicines;
+    private List<Pharmacist> medicines;
 
 	public int getId() {
 		return id;
@@ -94,11 +94,11 @@ public class Prescription {
 		this.doctor = doctor;
 	}
 
-	public List<Medical> getMedicines() {
+	public List<Pharmacist> getMedicines() {
 		return medicines;
 	}
 
-	public void setMedicines(List<Medical> medicines) {
+	public void setMedicines(List<Pharmacist> medicines) {
 		this.medicines = medicines;
 	}
     
