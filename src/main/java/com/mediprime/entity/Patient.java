@@ -84,7 +84,6 @@ public class Patient {
 	}
 
 
-
 	public List<Appointment> getAppointments() {
 		return appointments;
 	}

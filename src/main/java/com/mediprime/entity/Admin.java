@@ -1,5 +1,6 @@
 package com.mediprime.entity;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +24,7 @@ public class Admin {
     private String role; // ADMIN or RECEPTIONIST
 
     private String name;
+
 
     private String contact;
 
