@@ -32,6 +32,7 @@ public class DoctorController {
 	        Doctor doctor = service.login(email, password);
 
 	        if (doctor != null) {
+	        	model.addAttribute("doctor", doctor);
 	            return "doctor_dashboard";   // success page
 	        } else {
 

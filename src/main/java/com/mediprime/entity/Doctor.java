@@ -22,7 +22,7 @@ public class Doctor {
 	
 	private String name;
 	
-	private String Specialization;
+	private String specialization; 
 	
 	@Column(unique = true)
 	private String email;
@@ -57,11 +57,11 @@ public class Doctor {
 	}
 
 	public String getSpecialization() {
-		return Specialization;
+		return specialization;
 	}
 
 	public void setSpecialization(String specialization) {
-		Specialization = specialization;
+		this.specialization = specialization;
 	}
 
 	public String getEmail() {
