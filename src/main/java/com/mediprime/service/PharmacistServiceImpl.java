@@ -3,7 +3,6 @@ package com.mediprime.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mediprime.entity.Patient;
 import com.mediprime.entity.Pharmacist;
 import com.mediprime.repository.IPharmacistRepository;
 

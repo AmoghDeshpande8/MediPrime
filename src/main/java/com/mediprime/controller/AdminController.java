@@ -62,56 +62,6 @@ public class AdminController {
         return "Admin_register_page";
     }
 
-
-//    @PostMapping("/register")
-//    public String register(@RequestParam String username,
-//                           @RequestParam String password,
-//                           @RequestParam String name,
-//                           @RequestParam String email,
-//                           @RequestParam String contact,
-//                           @RequestParam String role,
-//                           Model model) {
-//
-//      
-//        if (!contact.matches("\\d{10}")) {
-//            model.addAttribute("error", "Contact must be exactly 10 digits");
-//
-//           
-//            model.addAttribute("username", username);
-//            model.addAttribute("name", name);
-//            model.addAttribute("email", email);
-//            model.addAttribute("contact", contact);
-//            model.addAttribute("role", role);
-//
-//            return "register_page";
-//        }
-//
-//        // ✅ Username already exists check (BETTER than exception)
-//        if (service.findByUsername(username) != null) {
-//
-//            model.addAttribute("error", "Username already exists");
-//
-//            model.addAttribute("username", username);
-//            model.addAttribute("name", name);
-//            model.addAttribute("email", email);
-//            model.addAttribute("contact", contact);
-//            model.addAttribute("role", role);
-//
-//            return "register_page";
-//        }
-//
-//        // ✅ Save data
-//        Admin admin = new Admin();
-//        
-//        admin.setUsername(username);
-//        admin.setPassword(password);
-//        admin.setName(name);
-//        admin.setEmail(email);
-//        admin.setContact(contact);
-//        admin.setRole(role);
-
-
-
     // ✅ Register Logic
     @PostMapping("/register")
     public String register(@ModelAttribute("admin") Admin admin,
@@ -126,6 +76,7 @@ public class AdminController {
         // 🔴 Check username exists
         if (service.findByUsername(admin.getUsername()) != null) {
             model.addAttribute("error", "Username already exists");
+
             return "Admin_register_page";
         }
 
