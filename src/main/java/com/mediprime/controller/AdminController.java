@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.mediprime.entity.Admin;
 import com.mediprime.service.IAdminService;
 
+
 @Controller
 public class AdminController {
 
@@ -58,7 +59,6 @@ public class AdminController {
     // ✅ Show Register Page
     @GetMapping("/register")
     public String showRegister() {
-
         return "Admin_register_page";
     }
 
@@ -85,6 +85,7 @@ public class AdminController {
         model.addAttribute("success", "Registration successful, please login");
         return "Admin_login_page";
     }
+
     // ✅ Dashboard Page
     @GetMapping("/dashboard")
     public String dashboard() {
