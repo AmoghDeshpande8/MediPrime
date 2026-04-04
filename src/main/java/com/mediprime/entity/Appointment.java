@@ -1,9 +1,9 @@
-
 package com.mediprime.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Data
@@ -14,8 +14,12 @@ public class Appointment {
     private int id;
 
     private LocalDate date;
+    private LocalTime time; 
 
-    private String status; // Booked, Completed, Cancelled
+    private String description; 
+
+    private String status; 
+  
 
     // Many appointments → one patient
     @ManyToOne
@@ -26,47 +30,4 @@ public class Appointment {
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
-    
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public LocalDate getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
-
-	public Doctor getDoctor() {
-		return doctor;
-	}
-
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
-	}
-    
-    
 }
