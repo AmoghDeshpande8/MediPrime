@@ -47,6 +47,7 @@ public class AdminController {
 
             if (existing == null) {
                 model.addAttribute("username", username);
+                
                 model.addAttribute("msg", "User not found, please register");
                 return "Admin_register_page";
             } else {

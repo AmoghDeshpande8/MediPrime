@@ -28,7 +28,9 @@ public class PatientController {
 		Patient patient = service.login(email, password);
 
 		if (patient != null) {
-			return "dashboard"; // success page
+			  model.addAttribute("patient", patient);//added to take patient name
+
+			return "patient_dashboard"; // success page
 		} else {
 
 			// check if user exists
@@ -97,6 +99,11 @@ public class PatientController {
 
 		model.addAttribute("success", "Registration successful, please login");
 		return "Patient_login_page";
+	}
+	@GetMapping("/takeAppointment")
+	public String takeAppointment() {
+		return "take_appointment";
+		
 	}
 
 }
