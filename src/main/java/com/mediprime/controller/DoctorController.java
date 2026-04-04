@@ -1,5 +1,7 @@
 package com.mediprime.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mediprime.entity.Doctor;
+import com.mediprime.entity.Patient;
 import com.mediprime.service.IDoctorService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/doctor-api")
@@ -27,12 +32,13 @@ public class DoctorController {
 	 @PostMapping("/login")
 	    public String login(@RequestParam String email,
 	                        @RequestParam String password,
-	                        Model model) {
+	                        Model model, HttpSession session) {
 
 	        Doctor doctor = service.login(email, password);
 
 	        if (doctor != null) {
 	        	model.addAttribute("doctor", doctor);
+	        	session.setAttribute("doctor", doctor);
 	            return "doctor_dashboard";   // success page
 	        } else {
 
@@ -79,7 +85,60 @@ public class DoctorController {
 	    }
 	    // ✅ Dashboard Page
 	    @GetMapping("/doctor")
-	    public String dashboard() {
+	    public String dashboard(HttpSession session, Model model) {
+	    	Doctor doctor = (Doctor) session.getAttribute("doctor");
+	    	model.addAttribute("doctor", doctor);
 	        return "doctor_dashboard";
+	    }
+	    
+	    @GetMapping("/appointments")
+	    public String appointments(Model model, HttpSession session) {
+
+	        Doctor doctor = (Doctor) session.getAttribute("doctor");
+
+	        if (doctor == null) {
+	            return "redirect:/doctor-api/doctor-login";
+	        }
+
+	        model.addAttribute("appointments", doctor.getAppointments());
+
+	        return "doctor_appointments";
+	    }
+	    
+	    @GetMapping("/patients")
+	    public String patients(Model model, HttpSession session) {
+
+	        Doctor doctor = (Doctor) session.getAttribute("doctor");
+
+	        if (doctor == null) {
+	            return "redirect:/doctor-api/doctor-login";
+	        }
+
+	        // get patients from appointments
+	        List<Patient> patients = doctor.getAppointments()
+	                .stream()
+	                .map(a -> a.getPatient())
+	                .distinct()
+	                .toList();
+
+	        model.addAttribute("patients", patients);
+
+	        return "doctor_patients";
+	    }
+	    
+	    @GetMapping("/profile")
+	    public String profile(HttpSession session, Model model) {
+
+	        Doctor doctor = (Doctor) session.getAttribute("doctor");
+
+	        model.addAttribute("doctor", doctor);
+
+	        return "doctor_profile";
+	    }
+	    
+	    @GetMapping("/logout")
+	    public String logout(HttpSession session) {
+	        session.invalidate();   // destroy session
+	        return "logout";
 	    }
 }
