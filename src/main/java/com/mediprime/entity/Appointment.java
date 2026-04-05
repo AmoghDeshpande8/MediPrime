@@ -52,13 +52,11 @@ public class Appointment {
 		this.date = date;
 	}
 
-
-
-	public String getTime() {
+	public LocalTime getTime() {
 		return time;
 	}
 
-	public void setTime(String time) {
+	public void setTime(LocalTime time) {
 		this.time = time;
 	}
 
@@ -93,4 +91,6 @@ public class Appointment {
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
+    
+    
 }

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctor Profile</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f4f6f9;
+        }
+
+        .sidebar {
+            height: 100vh;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            color: white;
+            display: block;
+            margin: 15px 0;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            color: #1abc9c;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div class="col-md-2 sidebar">
+            <h4>Doctor Panel</h4>
+            <a href="/SPRING/doctor-api/doctor">Dashboard</a>
+            <a href="/SPRING/doctor-api/appointments">Appointments</a>
+            <a href="/SPRING/doctor-api/patients">Patients</a>
+            <a href="/SPRING/doctor-api/profile">Profile</a>
+            <a href="/SPRING/doctor-api/logout">Logout</a>
+        </div>
+
+        <!-- Main -->
+        <div class="col-md-10 p-4">
+
+            <div class="card p-4">
+
+                <!-- Profile Top -->
+                <div class="text-center">
+                    <div class="profile-img">
+                        <span th:text="${doctor.name.charAt(0)}">D</span>
+                    </div>
+
+                    <h4 class="mt-3" th:text="${doctor.name}">Doctor Name</h4>
+                    <p class="text-muted" th:text="${doctor.specialization}">Specialization</p>
+                </div>
+
+                <hr>
+
+                <!-- Details -->
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <p><b>Email:</b> <span th:text="${doctor.email}"></span></p>
+                        <p><b>Contact:</b> <span th:text="${doctor.contact}"></span></p>
+                        <p><b>Experience:</b> <span th:text="${doctor.experience} + ' years'"></span></p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><b>Qualification:</b> <span th:text="${doctor.qualification}"></span></p>
+                        <p><b>Availability:</b> <span th:text="${doctor.availability}"></span></p>
+                    </div>
+
+                </div>
+
+                <!-- Update Button -->
+                <div class="text-center mt-4">
+                    <a href="/SPRING/doctor-api/edit-profile" class="btn btn-primary">
+                        Edit Profile
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
