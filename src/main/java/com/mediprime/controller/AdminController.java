@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mediprime.entity.Admin;
+import com.mediprime.repository.IAppointmentRepository;
 import com.mediprime.service.IAdminService;
 
 
@@ -17,6 +18,11 @@ public class AdminController {
 
     @Autowired
     private IAdminService service;
+    
+    @Autowired
+    private IAppointmentRepository ApptRepo;
+    
+   
 
     // ✅ Default/Home page
     @GetMapping("/")
@@ -91,5 +97,13 @@ public class AdminController {
     @GetMapping("/dashboard")
     public String dashboard() {
         return "dashboard";
+    }
+    
+    @GetMapping("/allAppointments")
+    public String allAppointments(Model model) {
+
+        model.addAttribute("appointments", ApptRepo.findAll());
+
+        return "admin_dashboard";
     }
 }

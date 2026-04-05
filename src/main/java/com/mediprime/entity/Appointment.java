@@ -1,9 +1,14 @@
 package com.mediprime.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
 import java.time.LocalDate;
-import java.time.LocalTime;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.Data;
 
 @Entity
 @Data
@@ -14,7 +19,7 @@ public class Appointment {
     private int id;
 
     private LocalDate date;
-    private LocalTime time; 
+    private String time; 
 
     private String description; 
 

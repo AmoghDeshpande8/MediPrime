@@ -69,6 +69,24 @@
                 </h4>
             </div>
 
+           <p id="successMsg" class="text-success text-center" th:text="${success}"></p>
+           
+             <div class="row">
+
+                <div class="col-md-4">
+                    <div class="card p-3 text-center">
+                        <h6>Total Doctors</h6>
+                        <h3 class="text-primary" th:text="${doctorCount}"></h3>
+                    </div>
+                </div>
+                
+                 <div class="col-md-4">
+                    <div class="card p-3 text-center">
+                        <h6>Total Appointments You Taken</h6>
+                        <h3 class="text-primary" th:text="${appointmentCount}"></h3>
+                    </div>
+                </div>
+                </div>
        
 
     
@@ -76,6 +94,13 @@
         </div>
     </div>
 </div>
-
+<script>
+    setTimeout(function() {
+        var msg = document.getElementById("successMsg");
+        if (msg) {
+            msg.style.display = "none";
+        }
+    }, 5000); // 5000 ms = 5 seconds
+</script>
 </body>
 </html>
