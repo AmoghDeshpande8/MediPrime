@@ -52,11 +52,12 @@ public class Appointment {
 		this.date = date;
 	}
 
-	public LocalTime getTime() {
+
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(LocalTime time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 
