@@ -1,151 +1,292 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MediPrime Hospital</title>
 
-<!-- Bootstrap LOCAL CSS -->
-<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
 
 <style>
+
+/* Background */
 body {
-    background: #f5f5f5;
+    background: linear-gradient(to right, #eef2f3, #dfe9f3);
+    font-family: 'Poppins', sans-serif;
 }
 
-.navbar {
-    background: #cbb38a !important;
+/* HEADER */
+header {
+    background: #f1f1f1;
 }
 
-.banner {
-    background: #d8c29d;
-    padding: 40px;
+/* Hero */
+.hero {
+    height: 90vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)),
+    url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3');
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Animation */
+.fadeUp {
+    animation: fadeUp 1.5s ease;
+}
+@keyframes fadeUp {
+    from {opacity:0; transform: translateY(40px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+/* Login animation */
+.slideUp {
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.7s ease;
+}
+.slideUp.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Show margin only when visible */
+#login.show {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 20px;
+    transition: 0.4s;
+}
+.card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* Login Box */
+.login-box {
+    background: rgba(255,255,255,0.9);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+/* Buttons */
+.glow-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255,193,7,0.9);
+}
+img:hover {
+    transform: scale(1.03);
+    transition: 0.4s;
+}
+
+/* Footer */
+.footer {
+    background: #0f172a;
+    color: white;
+    padding: 25px;
     text-align: center;
-    font-size: 24px;
-    font-weight: bold;
 }
 
-.card img {
-    height: 180px;
-    object-fit: cover;
-}
-
-.about-box {
-    width: 300px;
-}
 </style>
-
 </head>
 
 <body>
 
+<!-- HEADER (YOUR DESIGN) -->
+<header class="shadow-sm">
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="/">MediPrime</a>
+  <div class="container flex justify-between items-center py-3">
 
-    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navMenu">
-        ☰
-    </button>
+    <!-- LEFT: LOGO + TEXT -->
+    <div class="flex items-center gap-3">
 
-    <div class="collapse navbar-collapse justify-content-end" id="navMenu">
-      <ul class="navbar-nav">
+      <!-- LOGO -->
+      <img src="https://www.mediprime.co/images/logo.png"
+           alt="MediPrime Logo"
+           class="h-14 object-contain">
 
-        <!-- About -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">
-            About Us
-          </a>
-          <div class="dropdown-menu p-3 about-box">
-            MediPrime Hospital provides high-quality healthcare services.
-          </div>
-        </li>
+      <!-- TEXT -->
+     
+    </div>
 
-        <!-- Login -->
-        <li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle fw-bold" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown">
-    Login
-  </a>
-
-  <div class="dropdown-menu dropdown-menu-end p-3 shadow" style="min-width: 250px;">
-
-    <h6 class="dropdown-header text-center mb-2">Login As</h6>
-
-    <a href="admin" class="dropdown-item d-flex align-items-center gap-2">
-      👨‍💼 <span>Admin</span>
-    </a>
-
-    <a href="doctor-api/doctor-login" class="dropdown-item d-flex align-items-center gap-2">
-      🧑‍⚕️ <span>Doctor</span>
-    </a>
-
-    <a href="patient" class="dropdown-item d-flex align-items-center gap-2">
-      🧑‍🦽 <span>Patient</span>
-    </a>
-
-    <a href="pharm" class="dropdown-item d-flex align-items-center gap-2">
-      💊 <span>Medical Staff</span>
-    </a>
-
-    <hr>
-
-    <!-- Optional Quick Login Button -->
-    
+    <!-- RIGHT: MENU -->
+   
 
   </div>
-</li>
 
+</header>
+
+<!-- HERO -->
+<div class="hero text-center text-white">
+
+    <div class="fadeUp">
+        <h1 class="text-6xl font-extrabold">
+            Smart Healthcare System
+        </h1>
+
+        <p class="mt-4 text-lg opacity-90">
+            Book Appointments • Manage Patients • Digital Hospital
+        </p>
+
+        <button onclick="showLogin()" 
+        class="mt-6 px-8 py-3 bg-yellow-400 text-black font-bold rounded-full shadow-lg hover:scale-110 transition">
+            Login Now
+        </button>
+    </div>
+
+</div>
+
+<!-- LOGIN SECTION -->
+<section id="login" class="container slideUp hidden">
+
+  <h2 class="text-center mb-4 fw-bold text-3xl">Login Portal</h2>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+
+      <div class="login-box text-center">
+
+        <h4 class="mb-4 font-bold">Select Your Role</h4>
+
+        <div class="d-grid gap-3">
+
+          <a href="/SPRING/doctor-api/admin" class="btn btn-primary">👨‍💼 Admin</a>
+          <a href="/SPRING/doctor-api/doctor-login" class="btn btn-success">🧑‍⚕️ Doctor</a>
+          <a href="/SPRING/patient" class="btn btn-info">🧑 Patient</a>
+          <a href="/SPRING/pharm" class="btn btn-dark">💊 Pharmacy</a>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</section>
+<!-- ABOUT US -->
+<section class="container my-5">
+
+  <h2 class="text-center mb-5 fw-bold text-3xl">About MediPrime</h2>
+
+  <div class="row align-items-center g-5">
+
+    <!-- IMAGE -->
+    <div class="col-md-6">
+      <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118"
+           class="img-fluid rounded-4 shadow" style="height: 450px;"
+           alt="Hospital Image">
+    </div>
+
+    <!-- CONTENT -->
+    <div class="col-md-6">
+
+      <h3 class="fw-bold text-primary mb-3">
+        Advanced Healthcare with a Human Touch
+      </h3>
+
+      <p class="text-muted">
+        MediPrime Hospital is a modern healthcare platform dedicated to providing 
+        high-quality medical services with cutting-edge technology and compassionate care.
+        Our mission is to simplify hospital management and improve patient experiences 
+        through digital innovation.
+      </p>
+
+      <p class="text-muted">
+        We connect patients, doctors, and healthcare staff on a single platform where 
+        appointments, records, and treatments are managed efficiently and securely.
+      </p>
+
+      <!-- FEATURES -->
+      <ul class="mt-4 space-y-2">
+        <li>✔ Smart Appointment Booking System</li>
+        <li>✔ Experienced & Certified Doctors</li>
+        <li>✔ Digital Patient Records</li>
+        <li>✔ 24/7 Emergency & Support Services</li>
       </ul>
+
     </div>
+
   </div>
-</nav>
 
-<!-- Banner -->
-<div class="banner">
-    "God can not be everywhere so he sends Doctor"
-</div>
+</section>
+<!-- SERVICES -->
+<section class="container my-5">
 
-<h2 class="text-center mt-4">Start thinking wellness not illness</h2>
+  <h2 class="text-center mb-5 fw-bold text-3xl">Our Services</h2>
 
-<!-- Cards -->
-<div class="container mt-5">
-  <div class="row text-center g-4">
+  <div class="row g-4 text-center">
 
     <div class="col-md-4">
-      <div class="card shadow">
-        <img src="https://img.freepik.com/premium-photo/closeup-photo-doctor-standing-hospital-world-doctors-day-with-generative-ai_455711-2177.jpg?w=2000" class="card-img-top">
+      <div class="card p-3">
+        <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7" class="card-img-top rounded">
         <div class="card-body">
-          <h5 class="card-title">Our Doctors</h5>
-          <p class="card-text">Doctors diagnose and treat illness.</p>
+          <h5>Expert Doctors</h5>
+          <p>Top specialists with years of experience.</p>
         </div>
       </div>
     </div>
 
     <div class="col-md-4">
-      <div class="card shadow">
-        <img src="https://img.freepik.com/premium-photo/group-confident-indian-healthcare-professionals-nurses-teal-scrubs-smiling-bright-hospital-corridor_822916-3974.jpg" class="card-img-top">
+      <div class="card p-3">
+        <img src="https://img.freepik.com/premium-photo/group-confident-indian-healthcare-professionals-nurses-teal-scrubs-smiling-bright-hospital-corridor_822916-3974.jpg" class="card-img-top rounded">
         <div class="card-body">
-          <h5 class="card-title">Our Nurses</h5>
-          <p class="card-text">Nurses care for patients.</p>
+          <h5>24/7 Support</h5>
+          <p>Always available for emergency care.</p>
         </div>
       </div>
     </div>
 
     <div class="col-md-4">
-      <div class="card shadow">
-        <img src="https://as2.ftcdn.net/v2/jpg/07/20/35/27/1000_F_720352714_fe8ZThSvRyxfoUcOSpEgKpa2YO5ti7Zv.jpg" class="card-img-top">
+      <div class="card p-3">
+        <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88" class="card-img-top rounded">
         <div class="card-body">
-          <h5 class="card-title">Pharmacist</h5>
-          <p class="card-text">Handles medicines.</p>
+          <h5>Pharmacy</h5>
+          <p>Quick access to medicines.</p>
         </div>
       </div>
     </div>
 
   </div>
+
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+  <h5>MediPrime Hospital</h5>
+  <p>© 2026 All Rights Reserved | Designed with ❤️</p>
 </div>
 
-<!-- Bootstrap LOCAL JS -->
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<!-- SCRIPT -->
+<script>
+
+function showLogin() {
+    const loginSection = document.getElementById("login");
+
+    loginSection.classList.remove("hidden");
+
+    setTimeout(() => {
+        loginSection.classList.add("show");
+    }, 50);
+
+    loginSection.scrollIntoView({ behavior: "smooth" });
+}
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+</script>
 
 </body>
 </html>
