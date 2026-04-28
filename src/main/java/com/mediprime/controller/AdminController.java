@@ -1,5 +1,7 @@
 package com.mediprime.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,8 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mediprime.entity.Admin;
+import com.mediprime.entity.Doctor;
 import com.mediprime.repository.IAppointmentRepository;
+import com.mediprime.repository.IDoctorRepository;
 import com.mediprime.service.IAdminService;
+import com.mediprime.service.IPatientService;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -20,8 +27,13 @@ public class AdminController {
     private IAdminService service;
     
     @Autowired
+    private IDoctorRepository doctorRepo;
+    
+    @Autowired
     private IAppointmentRepository ApptRepo;
     
+    @Autowired
+    private IPatientService patservice;
    
 
     // ✅ Default/Home page
@@ -40,12 +52,13 @@ public class AdminController {
     @PostMapping("/login")
     public String login(@RequestParam String username,
                         @RequestParam String password,
-                        Model model) {
+                        Model model,HttpSession  session) {
 
         Admin admin = service.login(username, password);
 
         if (admin != null) {
-            return "dashboard";   // success page
+        	 session.setAttribute("admin", admin);
+        	 return "redirect:/dashboard";    // success page
         } else {
 
             // check if user exists
@@ -93,10 +106,24 @@ public class AdminController {
         return "Admin_login_page";
     }
 
-    // ✅ Dashboard Page
     @GetMapping("/dashboard")
-    public String dashboard() {
-        return "dashboard";
+    public String dashboard(HttpSession session, Model model) {
+
+        Admin admin = (Admin) session.getAttribute("admin"); 
+
+        model.addAttribute("admin", admin); // ✅ SEND TO HTML
+        
+        //to get doc count
+        List<Doctor> doctors = patservice.getAllDoctors();
+        model.addAttribute("doctorCount", doctors.size());
+        
+
+        long totalAppointments = ApptRepo.count();  // ✅ IMPORTANT
+
+        model.addAttribute("admin", admin);
+        model.addAttribute("totalAppointments", totalAppointments);
+        
+        return "admin_dashboard";
     }
     
     @GetMapping("/allAppointments")
@@ -104,6 +131,52 @@ public class AdminController {
 
         model.addAttribute("appointments", ApptRepo.findAll());
 
-        return "admin_dashboard";
+        return "admin_appointments";
     }
+    
+//    ==
+    @GetMapping("/pendingDoctors")
+    public String pendingDoctors(Model model) {
+
+        List<Doctor> list = doctorRepo.findAll()
+                .stream()
+                .filter(d -> "PENDING".equals(d.getStatus()))
+                .toList();
+
+        model.addAttribute("doctors", list);
+
+        return "admin_doctors"; // create this page
+    }
+    @GetMapping("/approveDoctor")
+    public String approveDoctor(@RequestParam Integer id) {
+
+        Doctor doc = doctorRepo.findById(id).get();
+        doc.setStatus("APPROVED");
+        doctorRepo.save(doc);
+
+        return "redirect:/pendingDoctors";
+    }
+    @GetMapping("/rejectDoctor")
+    public String rejectDoctor(@RequestParam Integer id) {
+
+        doctorRepo.deleteById(id);
+
+        return "redirect:/pendingDoctors";
+    }
+    
+    @GetMapping("/admin-profile")
+    public String profile(HttpSession session, Model model) {
+
+       Admin admin = (Admin) session.getAttribute("admin");
+
+        model.addAttribute("admin", admin);
+
+        return "admin_profile";
+    }
+    @GetMapping("/adminlogout")
+    public String logout(HttpSession session) {
+        session.invalidate();   // destroy session
+        return "admin_logout";
+    }
+    		
 }
