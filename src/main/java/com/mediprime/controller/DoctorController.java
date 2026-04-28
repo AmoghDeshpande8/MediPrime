@@ -149,6 +149,6 @@ public class DoctorController {
 	    @GetMapping("/logout")
 	    public String logout(HttpSession session) {
 	        session.invalidate();   // destroy session
-	        return "logout";
+	        return "doctor_logout";
 	    }
 }
