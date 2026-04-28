@@ -33,8 +33,11 @@ public class DoctorService implements IDoctorService {
 
 	@Override
 	public void register(Doctor doctor) {
+		 doctor.setStatus("PENDING"); 
 		repo.save(doctor);
 		
 	}
+	
+	
 
 }

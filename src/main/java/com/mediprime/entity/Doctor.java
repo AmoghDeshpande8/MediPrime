@@ -37,6 +37,16 @@ public class Doctor {
 	
 	private String availability;
 	
+	private String status; // PENDING / APPROVED
+
+	public String getStatus() {
+	    return status;
+	}
+
+	public void setStatus(String status) {
+	    this.status = status;
+	}
+	
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
 	private List<Appointment> appointments;
 

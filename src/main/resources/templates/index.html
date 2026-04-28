@@ -19,6 +19,11 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+/* Smooth global transition */
+* {
+    transition: all 0.4s ease-in-out;
+}
+
 /* HEADER */
 header {
     background: #f1f1f1;
@@ -30,46 +35,57 @@ header {
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)),
     url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3');
     background-size: cover;
+    background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* Animation */
+/* Hero animation */
 .fadeUp {
-    animation: fadeUp 1.5s ease;
+    animation: fadeUp 1.2s ease forwards;
 }
 @keyframes fadeUp {
-    from {opacity:0; transform: translateY(40px);}
-    to {opacity:1; transform: translateY(0);}
+    0% {opacity:0; transform: translateY(60px);}
+    100% {opacity:1; transform: translateY(0);}
 }
 
 /* Login animation */
 .slideUp {
-    transform: translateY(80px);
+    transform: translateY(100px);
     opacity: 0;
-    transition: all 0.7s ease;
+    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .slideUp.show {
     transform: translateY(0);
     opacity: 1;
 }
 
-/* Show margin only when visible */
 #login.show {
     margin-top: 40px;
     margin-bottom: 40px;
+}
+
+/* Section animation */
+.fade-section {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease;
+}
+.fade-section.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Cards */
 .card {
     border: none;
     border-radius: 20px;
-    transition: 0.4s;
+    transition: all 0.5s ease;
 }
 .card:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.25);
 }
 
 /* Login Box */
@@ -80,14 +96,33 @@ header {
     box-shadow: 0 15px 40px rgba(0,0,0,0.2);
 }
 
-/* Buttons */
+/* Button glow */
+.glow-btn {
+    transition: all 0.3s ease;
+}
 .glow-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(255,193,7,0.9);
+    transform: scale(1.08);
+    box-shadow: 0 10px 30px rgba(255,193,7,0.6);
+}
+
+/* Images */
+img {
+    transition: transform 0.5s ease;
 }
 img:hover {
-    transform: scale(1.03);
-    transition: 0.4s;
+    transform: scale(1.05);
+}
+.gallery-img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+}
+
+.gallery-img:hover {
+    transform: scale(1.08);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
 }
 
 /* Footer */
@@ -103,33 +138,19 @@ img:hover {
 
 <body>
 
-<!-- HEADER (YOUR DESIGN) -->
+<!-- HEADER -->
 <header class="shadow-sm">
-
   <div class="container flex justify-between items-center py-3">
-
-    <!-- LEFT: LOGO + TEXT -->
     <div class="flex items-center gap-3">
-
-      <!-- LOGO -->
       <img src="https://www.mediprime.co/images/logo.png"
            alt="MediPrime Logo"
            class="h-14 object-contain">
-
-      <!-- TEXT -->
-     
     </div>
-
-    <!-- RIGHT: MENU -->
-   
-
   </div>
-
 </header>
 
 <!-- HERO -->
 <div class="hero text-center text-white">
-
     <div class="fadeUp">
         <h1 class="text-6xl font-extrabold">
             Smart Healthcare System
@@ -140,89 +161,65 @@ img:hover {
         </p>
 
         <button onclick="showLogin()" 
-        class="mt-6 px-8 py-3 bg-yellow-400 text-black font-bold rounded-full shadow-lg hover:scale-110 transition">
+        class="mt-6 px-8 py-3 bg-yellow-400 text-black font-bold rounded-full shadow-lg glow-btn">
             Login Now
         </button>
     </div>
-
 </div>
 
-<!-- LOGIN SECTION -->
+<!-- LOGIN -->
 <section id="login" class="container slideUp hidden">
-
   <h2 class="text-center mb-4 fw-bold text-3xl">Login Portal</h2>
 
   <div class="row justify-content-center">
     <div class="col-md-6">
-
       <div class="login-box text-center">
 
         <h4 class="mb-4 font-bold">Select Your Role</h4>
 
         <div class="d-grid gap-3">
-
-          <a href="/SPRING/doctor-api/admin" class="btn btn-primary">👨‍💼 Admin</a>
+          <a href="/SPRING/admin" class="btn btn-primary">👨‍💼 Admin</a>
           <a href="/SPRING/doctor-api/doctor-login" class="btn btn-success">🧑‍⚕️ Doctor</a>
           <a href="/SPRING/patient" class="btn btn-info">🧑 Patient</a>
           <a href="/SPRING/pharm" class="btn btn-dark">💊 Pharmacy</a>
-
         </div>
 
       </div>
-
     </div>
   </div>
-
 </section>
-<!-- ABOUT US -->
-<section class="container my-5">
 
+<!-- ABOUT -->
+<section class="container my-5 fade-section">
   <h2 class="text-center mb-5 fw-bold text-3xl">About MediPrime</h2>
 
   <div class="row align-items-center g-5">
-
-    <!-- IMAGE -->
     <div class="col-md-6">
       <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118"
-           class="img-fluid rounded-4 shadow" style="height: 450px;"
-           alt="Hospital Image">
+           class="img-fluid rounded-4 shadow" style="height: 450px;">
     </div>
 
-    <!-- CONTENT -->
     <div class="col-md-6">
-
       <h3 class="fw-bold text-primary mb-3">
         Advanced Healthcare with a Human Touch
       </h3>
 
       <p class="text-muted">
-        MediPrime Hospital is a modern healthcare platform dedicated to providing 
-        high-quality medical services with cutting-edge technology and compassionate care.
-        Our mission is to simplify hospital management and improve patient experiences 
-        through digital innovation.
+        MediPrime Hospital provides high-quality healthcare with modern technology.
       </p>
 
-      <p class="text-muted">
-        We connect patients, doctors, and healthcare staff on a single platform where 
-        appointments, records, and treatments are managed efficiently and securely.
-      </p>
-
-      <!-- FEATURES -->
-      <ul class="mt-4 space-y-2">
-        <li>✔ Smart Appointment Booking System</li>
-        <li>✔ Experienced & Certified Doctors</li>
-        <li>✔ Digital Patient Records</li>
-        <li>✔ 24/7 Emergency & Support Services</li>
+      <ul class="mt-4">
+        <li>✔ Smart Appointment Booking</li>
+        <li>✔ Experienced Doctors</li>
+        <li>✔ Digital Records</li>
+        <li>✔ 24/7 Support</li>
       </ul>
-
     </div>
-
   </div>
-
 </section>
-<!-- SERVICES -->
-<section class="container my-5">
 
+<!-- SERVICES -->
+<section class="container my-5 fade-section">
   <h2 class="text-center mb-5 fw-bold text-3xl">Our Services</h2>
 
   <div class="row g-4 text-center">
@@ -232,7 +229,6 @@ img:hover {
         <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7" class="card-img-top rounded">
         <div class="card-body">
           <h5>Expert Doctors</h5>
-          <p>Top specialists with years of experience.</p>
         </div>
       </div>
     </div>
@@ -242,7 +238,6 @@ img:hover {
         <img src="https://img.freepik.com/premium-photo/group-confident-indian-healthcare-professionals-nurses-teal-scrubs-smiling-bright-hospital-corridor_822916-3974.jpg" class="card-img-top rounded">
         <div class="card-body">
           <h5>24/7 Support</h5>
-          <p>Always available for emergency care.</p>
         </div>
       </div>
     </div>
@@ -252,21 +247,59 @@ img:hover {
         <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88" class="card-img-top rounded">
         <div class="card-body">
           <h5>Pharmacy</h5>
-          <p>Quick access to medicines.</p>
         </div>
       </div>
     </div>
 
   </div>
+</section>
+<!-- GALLERY CAROUSEL -->
+<section class="container my-5 fade-section">
+  <h2 class="text-center mb-5 fw-bold text-3xl">OUR GALLERY</h2>
 
+  <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+
+    <div class="carousel-inner text-center">
+
+      <!-- Slide 1 -->
+      <div class="carousel-item active">
+        <div class="d-flex justify-content-center gap-4 flex-wrap">
+          <img src="https://mediprimehospitals.com/images/gal/2.jpg" class="gallery-img">
+          <img src="https://mediprimehospitals.com/images/gal/8.jpg" class="gallery-img">
+          <img src="https://mediprimehospitals.com/images/service/21.jpg" class="gallery-img">
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="carousel-item">
+        <div class="d-flex justify-content-center gap-4 flex-wrap">
+          <img src="https://mediprimehospitals.com/images/service/18.jpg" class="gallery-img">
+          <img src="https://mediprimehospitals.com/images/gal/6.jpg" class="gallery-img">
+          <img src="https://mediprimehospitals.com/images/service/6.jpg" class="gallery-img">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- LEFT BUTTON -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bg-dark p-3 rounded"></span>
+    </button>
+
+    <!-- RIGHT BUTTON -->
+    <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon bg-dark p-3 rounded"></span>
+    </button>
+
+  </div>
 </section>
 
 <!-- FOOTER -->
 <div class="footer">
   <h5>MediPrime Hospital</h5>
-  <p>© 2026 All Rights Reserved | Designed with ❤️</p>
+  <p>© 2026 All Rights Reserved</p>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- SCRIPT -->
 <script>
 
@@ -282,9 +315,18 @@ function showLogin() {
     loginSection.scrollIntoView({ behavior: "smooth" });
 }
 
-function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
+// Scroll animation
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        }
+    });
+}, { threshold: 0.2 });
+
+document.querySelectorAll(".fade-section").forEach(el => {
+    observer.observe(el);
+});
 
 </script>
 

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mediprime.entity.Appointment;
 import com.mediprime.entity.Doctor;
@@ -159,7 +160,7 @@ public class PatientController {
                                   @RequestParam String description,
                                   @RequestParam String time,
                                   HttpSession session,
-                                  Model model ) {
+                                 RedirectAttributes r ) {
 
         Patient patient = (Patient) session.getAttribute("loggedPatient");
 
@@ -170,9 +171,25 @@ public class PatientController {
         service.bookAppointment(patient.getId(), doctorId, date, description, time);
 
     
-       model.addAttribute("success", "Appointment booked successfully");
+        r.addFlashAttribute("success", "Appointment booked successfully");
 
         
         return "redirect:/patientDashboard";
     }
+
+    @GetMapping("/patient-profile")
+    public String profile(HttpSession session, Model model) {
+
+        Patient patient = (Patient) session.getAttribute("loggedPatient");
+
+        model.addAttribute("patient", patient);
+
+        return "patient_profile";
+    }
+    @GetMapping("/patlogout")
+    public String logout(HttpSession session) {
+        session.invalidate();   // destroy session
+        return "patient_logout";
+    }
+
 }

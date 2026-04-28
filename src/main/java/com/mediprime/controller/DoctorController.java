@@ -29,60 +29,70 @@ public class DoctorController {
         return "doctor_login";
     }
 	
-	 @PostMapping("/login")
-	    public String login(@RequestParam String email,
-	                        @RequestParam String password,
-	                        Model model, HttpSession session) {
+	@PostMapping("/login")
+	public String login(@RequestParam String email,
+	                    @RequestParam String password,
+	                    Model model, HttpSession session) {
 
-	        Doctor doctor = service.login(email, password);
+	    Doctor doctor = service.login(email, password);
 
-	        if (doctor != null) {
-	        	model.addAttribute("doctor", doctor);
-	        	session.setAttribute("doctor", doctor);
-	            return "doctor_dashboard";   // success page
+	    if (doctor != null) {
+
+	        if ("APPROVED".equals(doctor.getStatus())) {
+
+	            session.setAttribute("doctor", doctor);
+	            model.addAttribute("doctor", doctor);
+	            return "doctor_dashboard";
+
 	        } else {
+	            model.addAttribute("error", "Account not approved yet");
+	            return "doctor_login";
+	        }
 
-	            // check if user exists
-	            Doctor existing = service.findByEmail(email);
+	    } else {
 
-	            if (existing == null) {
-	                model.addAttribute("email", email);
-	                model.addAttribute("msg", "User not found, please register");
-	                return "doctor_register";
-	            } else {
-	                model.addAttribute("error", "Invalid password");
-	                return "doctor_login";
-	            }
+	        Doctor existing = service.findByEmail(email);
+
+	        if (existing == null) {
+	            model.addAttribute("msg", "User not found, please register");
+	            return "doctor_register";
+	        } else {
+	            model.addAttribute("error", "Invalid password");
+	            return "doctor_login";
 	        }
 	    }
-	 
+	}
 	 @GetMapping("/doctor-register")
 	    public String showRegister() {
 	        return "doctor_register";
 	    }
 
 	    // ✅ Register Logic
-	    @PostMapping("/register")
-	    public String register(@ModelAttribute("doctor") Doctor doctor,
-	                           org.springframework.validation.BindingResult result,
-	                           Model model) {
+	 @PostMapping("/register")
+	 public String register(@ModelAttribute("doctor") Doctor doctor,
+	                        org.springframework.validation.BindingResult result,
+	                        Model model) {
 
-	        // 🔴 Validation errors (like contact not 10 digits)
-	        if (result.hasErrors()) {
-	            return "doctor_register";
-	        }
+	     if (result.hasErrors()) {
+	         return "doctor_register";
+	     }
 
-	        // 🔴 Check username exists
-	        if (service.findByEmail(doctor.getEmail()) != null) {
-	            model.addAttribute("error", "Email already exists");
-	            return "doctor_register";
-	        }
+	     if (service.findByEmail(doctor.getEmail()) != null) {
+	         model.addAttribute("error", "Email already exists");
+	         return "doctor_register";
+	     }
 
-	        service.register(doctor);
+	     // ✅ Important line
+	     doctor.setStatus("PENDING");
 
-	        model.addAttribute("success", "Registration successful, please login");
-	        return "doctor_login";
-	    }
+	     service.register(doctor);
+
+	     model.addAttribute("success", "Registration successful, wait for admin approval");
+	     return "doctor_login";
+	 }
+	 
+	 
+	 
 	    // ✅ Dashboard Page
 	    @GetMapping("/doctor")
 	    public String dashboard(HttpSession session, Model model) {
